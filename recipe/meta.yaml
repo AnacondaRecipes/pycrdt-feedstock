@@ -65,6 +65,7 @@ about:
     - LICENSE
     - THIRDPARTY.yml
   summary: CRDTs based on Yrs
+  description: Pycrdt is a Python CRDT library that provides bindings for Yrs, the Rust port of the Yjs framework.
   dev_url: https://github.com/jupyter-server/pycrdt
   doc_url: https://jupyter-server.github.io/pycrdt
 
