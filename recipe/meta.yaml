@@ -1,46 +1,41 @@
-{% set maturin_version = ">=1.8.2,<2" %}
-{% set maturin_version = ">=1.8.2,<2" %}
-{% set maturin_version = ">=1.8.2,<2" %}
-{% set maturin_version = ">=1.8.2,<2" %}
-{% set version = "0.12.12" %}
+{% set name = "pycrdt" %}
+{% set version = "0.12.13" %}
 
 package:
-  name: pycrdt
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/p/pycrdt/pycrdt-{{ version }}.tar.gz
-  sha256: d8243fb696f6c621f736753897a492c8cc6e717921a7cde5fe874a24baf81e9c
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: dbf1d4785a25f614b057a1d7c66539bcd6ee4cd5aaa00c93f1f2ac5d0ae1f9c3
 
 build:
   number: 0
   script:
-    - {{ PYTHON }} -m pip install . -vv
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+  skip: True  # [py<39]
 
 requirements:
   build:
     - python
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - {{ compiler('c') }}
-    - {{ stdlib('c') }}
     - {{ compiler('rust') }}
     - cargo-bundle-licenses
-    - maturin
+    # upstream repo needs - maturin >=1.8.2,<2 only 1.7.8 in main channel is available.
+    - maturin >=1.7.8,<2
   host:
-    - maturin
+    - maturin >=1.7.8,<2
     - pip
     - python
   run:
     - python
     - anyio >=4.4.0,<5.0.0
-    - importlib_metadata >=3.6
+    - importlib_metadata >=3.6  # [py<310]
 
 test:
-  requires:
-    - pip
-  commands:
-    - pip check
+  source_files:
+    - tests
   imports:
     - pycrdt
     - pycrdt._awareness
@@ -52,6 +47,14 @@ test:
     - pycrdt._undo
     - pycrdt._update
     - pycrdt._sync
+  commands:
+    - pip check
+    - pytest -v tests
+  requires:
+    - pip
+    - pytest >=7.4.2,<8
+    - trio >=0.25.1,<0.30
+    - pydantic >=2.5.2,<3
 
 about:
   home: https://github.com/jupyter-server/pycrdt
@@ -61,6 +64,7 @@ about:
     - LICENSE
     - THIRDPARTY.yml
   summary: CRDTs based on Yrs
+  description: Pycrdt is a Python CRDT library that provides bindings for Yrs, the Rust port of the Yjs framework.
   dev_url: https://github.com/jupyter-server/pycrdt
   doc_url: https://jupyter-server.github.io/pycrdt
 
