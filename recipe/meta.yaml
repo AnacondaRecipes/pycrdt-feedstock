@@ -1,20 +1,21 @@
 {% set name = "pycrdt" %}
 {% set version = "0.12.13" %}
+{% set tests_to_skip = "test_awareness_periodic_updates" %}  # [win]
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: dbf1d4785a25f614b057a1d7c66539bcd6ee4cd5aaa00c93f1f2ac5d0ae1f9c3
 
 build:
-  number: 0
+  number: 1
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-  skip: True  # [py<39]
+  skip: true  # [py<39]
 
 requirements:
   build:
@@ -35,8 +36,6 @@ requirements:
 
 # >       assert len(changes) == 5
 # E       AssertionError: assert 6 == 5
-{% set tests_to_skip = "test_awareness_periodic_updates" %}  # [win]
-
 test:
   source_files:
     - tests
@@ -58,7 +57,7 @@ test:
   requires:
     - pip
     - pytest >=7.4.2,<8
-    - trio >=0.25.1,<0.30
+    - trio >=0.25.1,<0.32
     - pydantic >=2.5.2,<3
 
 about:
