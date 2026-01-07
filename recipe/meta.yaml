@@ -1,37 +1,37 @@
 {% set name = "pycrdt" %}
-{% set version = "0.12.13" %}
+{% set version = "0.12.44" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: dbf1d4785a25f614b057a1d7c66539bcd6ee4cd5aaa00c93f1f2ac5d0ae1f9c3
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: afd317f540ca6c7c830bfadda26f26b811681e70fe1a260894065d3b8f5b359c
 
 build:
   number: 0
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-  skip: True  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   build:
     - python
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('rust') }}
     - cargo-bundle-licenses
-    # upstream repo needs - maturin >=1.8.2,<2 only 1.7.8 in main channel is available.
-    - maturin >=1.7.8,<2
+    - maturin >=1.8.2,<2
   host:
-    - maturin >=1.7.8,<2
+    - maturin >=1.8.2,<2
     - pip
     - python
   run:
     - python
     - anyio >=4.4.0,<5.0.0
-    - importlib_metadata >=3.6  # [py<310]
+    - typing_extensions >=4.14.0  # [py<311]
 
 # >       assert len(changes) == 5
 # E       AssertionError: assert 6 == 5
@@ -57,9 +57,10 @@ test:
     - pytest -v -k "not ({{ tests_to_skip }})" tests  # [win]
   requires:
     - pip
-    - pytest >=7.4.2,<8
-    - trio >=0.25.1,<0.30
+    - pytest >=8.3.5,<10
+    - trio >=0.25.1,<0.33
     - pydantic >=2.5.2,<3
+    - exceptiongroup  # [py<311]
 
 about:
   home: https://github.com/jupyter-server/pycrdt
