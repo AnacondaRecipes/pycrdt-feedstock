@@ -1,5 +1,5 @@
 {% set name = "pycrdt" %}
-{% set version = "0.12.44" %}
+{% set version = "0.12.50" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: afd317f540ca6c7c830bfadda26f26b811681e70fe1a260894065d3b8f5b359c
+  sha256: 506d4bc00d7d566de4018dca52998ab7cf97c787363bc59440d3a3bb3336d1a0
 
 build:
   number: 0
