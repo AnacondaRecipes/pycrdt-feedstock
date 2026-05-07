@@ -73,7 +73,7 @@ about:
   summary: CRDTs based on Yrs
   description: Pycrdt is a Python CRDT library that provides bindings for Yrs, the Rust port of the Yjs framework.
   dev_url: https://github.com/y-crdt/pycrdt
-  doc_url: https://jupyter-server.github.io/pycrdt
+  doc_url: https://y-crdt.github.io/pycrdt/
 
 extra:
   recipe-maintainers:
