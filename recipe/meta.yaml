@@ -58,7 +58,7 @@ test:
   requires:
     - pip
     - pytest >=8.3.5,<10
-    - trio >=0.25.1,<0.33
+    - trio >=0.25.1,<0.34
     - pydantic >=2.5.2,<3
     - exceptiongroup  # [py<311]
 
