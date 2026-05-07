@@ -1,5 +1,5 @@
 {% set name = "pycrdt" %}
-{% set version = "0.12.44" %}
+{% set version = "0.12.50" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: afd317f540ca6c7c830bfadda26f26b811681e70fe1a260894065d3b8f5b359c
+  sha256: 506d4bc00d7d566de4018dca52998ab7cf97c787363bc59440d3a3bb3336d1a0
 
 build:
   number: 0
@@ -32,6 +32,7 @@ requirements:
     - python
     - anyio >=4.4.0,<5.0.0
     - typing_extensions >=4.14.0  # [py<311]
+    - exceptiongroup  # [py<311]
 
 # >       assert len(changes) == 5
 # E       AssertionError: assert 6 == 5
@@ -58,12 +59,12 @@ test:
   requires:
     - pip
     - pytest >=8.3.5,<10
-    - trio >=0.25.1,<0.33
+    - trio >=0.25.1,<0.34
     - pydantic >=2.5.2,<3
     - exceptiongroup  # [py<311]
 
 about:
-  home: https://github.com/jupyter-server/pycrdt
+  home: https://github.com/y-crdt/pycrdt
   license: MIT
   license_family: MIT
   license_file:
@@ -71,8 +72,8 @@ about:
     - THIRDPARTY.yml
   summary: CRDTs based on Yrs
   description: Pycrdt is a Python CRDT library that provides bindings for Yrs, the Rust port of the Yjs framework.
-  dev_url: https://github.com/jupyter-server/pycrdt
-  doc_url: https://jupyter-server.github.io/pycrdt
+  dev_url: https://github.com/y-crdt/pycrdt
+  doc_url: https://y-crdt.github.io/pycrdt/
 
 extra:
   recipe-maintainers:
