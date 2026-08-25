@@ -1,13 +1,13 @@
 {% set name = "pycrdt" %}
-{% set version = "0.12.50" %}
+{% set version = "0.14.4" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 506d4bc00d7d566de4018dca52998ab7cf97c787363bc59440d3a3bb3336d1a0
+  sha256: 508d1d1a573faec11236cdb69f793682591845b0b0184fbfe9c49147e9625044
 
 build:
   number: 0
@@ -31,7 +31,7 @@ requirements:
   run:
     - python
     - anyio >=4.4.0,<5.0.0
-    - typing_extensions >=4.14.0  # [py<311]
+    - typing_extensions >=4.15.0,<5.0.0  # [py<311]
     - exceptiongroup  # [py<311]
 
 # >       assert len(changes) == 5
@@ -59,9 +59,9 @@ test:
   requires:
     - pip
     - pytest >=8.3.5,<10
-    - trio >=0.25.1,<0.34
+    - trio >=0.25.1,<0.35
     - pydantic >=2.5.2,<3
-    - exceptiongroup  # [py<311]
+    - anyio
 
 about:
   home: https://github.com/y-crdt/pycrdt
